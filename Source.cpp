@@ -35,23 +35,24 @@ public:
 	// counstructor
 	// call day immediately
 	// add lessons immediately
-	day(string name, string& lessons) {
+	day(string name, string lessons[]) {
 
 		this->name = name;
 
+		int size = sizeof(&lessons);
+
 		// check size 
-		if (lessons.size() > num_lessons) {
+		if (size > num_lessons) {
 			cout << "Error: add too many lessons";
 			return;
 		}
 
 		// add lessons
-		int i;
-		for (i = 0; i < lessons.size(); i++) {
+		for (int i = 0; i < size; i++) {
 			this->lessons[i] = lessons[i];
 		}
-		workload = i;
 
+		this->workload = size;
 	}
 
 	// distructor
@@ -61,8 +62,13 @@ public:
 
 	// print main info
 	void print() {
-		cout << name << endl;
-		for (int i = 0; i < num_lessons; i++) {
+		cout << name;
+
+		if (workload == 0) {
+			cout << "\t" << "no lessons" << endl;
+		}
+
+		for (int i = 0; i < workload; i++) {
 			cout << "\t" << lessons[i] << endl;
 		}
 	}
@@ -70,8 +76,13 @@ public:
 	// print main info in file.txt
 	// open file before call
 	void print(ofstream& file) {
-		file << name << endl;
-		for (int i = 0; i < num_lessons; i++) {
+		file << name;
+
+		if (workload == 0) {
+			file << "\t no lessons" << endl;
+		}
+
+		for (int i = 0; i < workload; i++) {
 			file << "\t" << lessons[i] << endl;
 		}
 	}
@@ -79,7 +90,7 @@ public:
 	// day overload -> true
 	// day have free place -> false
 	bool overload() {
-		return ((workload + 1) == num_lessons);
+		return (workload + 1 == num_lessons);
 	}
 
 	// return true if day consist subject
@@ -115,8 +126,9 @@ public:
 	// k = 1, 2, ...
 	// ( if day consist k lessons
 	string getlesson(int k) {
-		if (k < workload) {
-			return lessons[k - 1];
+		int i = k - 1;
+		if (i < workload) {
+			return lessons[i];
 		}
 		else {
 			return "\0";
@@ -164,7 +176,7 @@ public:
 
 	// remove last lesson <subject>
 	void remove_lesson(string subject) {
-		
+
 		// find subject
 		int i;
 		for (i = workload - 1; i >= 0; i--) {

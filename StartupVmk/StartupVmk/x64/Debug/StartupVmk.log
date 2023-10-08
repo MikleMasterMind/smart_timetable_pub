@@ -1,0 +1,3 @@
+﻿  Source_day.cpp
+C:\Users\Михаил\source\repos\StartupVmk\StartupVmk\Source_day.cpp(10,11): error C2011: day: переопределение типа "class"
+C:\Users\Михаил\source\repos\StartupVmk\StartupVmk\day.h(10): message : см. объявление "day"
